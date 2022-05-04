@@ -1,6 +1,8 @@
 package com.quintrix.jfs.quintrixspringclient.quintrixspringclient.service.impl;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import com.quintrix.jfs.quintrixspringclient.quintrixspringclient.Model.VideoGame;
 import com.quintrix.jfs.quintrixspringclient.quintrixspringclient.service.VideoGameService;
 
 @Service
@@ -38,6 +41,16 @@ public class VideoGameServiceImpl implements VideoGameService {
     ResponseEntity<String> call =
         restTemplate.exchange(GET_ALL_VIDEOGAME_API, HttpMethod.GET, entity, String.class);
     return call;
+  }
+
+  // Consume api with params
+  @Override
+  public VideoGame getGameById(String id) {
+    Map<String, String> urlParams = new HashMap<>();
+    urlParams.put("id", id);
+    VideoGame response =
+        restTemplate.getForObject(GET_VIDEOGAME_BY_ID_API, VideoGame.class, urlParams);
+    return response;
   }
 
 }

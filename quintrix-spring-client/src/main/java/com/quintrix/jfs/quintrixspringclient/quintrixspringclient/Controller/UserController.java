@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.quintrix.jfs.quintrixspringclient.quintrixspringclient.Model.User;
+import com.quintrix.jfs.quintrixspringclient.quintrixspringclient.Model.VideoGame;
 import com.quintrix.jfs.quintrixspringclient.quintrixspringclient.service.UserService;
 import com.quintrix.jfs.quintrixspringclient.quintrixspringclient.service.VideoGameService;
 
@@ -35,6 +36,13 @@ public class UserController {
     return response;
   }
 
+  @GetMapping("/game/{id}")
+  public VideoGame getAllVideoGames(@PathVariable("id") String id) {
+
+    VideoGame response = videogameservice.getGameById(id);
+
+    return response;
+  }
 
   @PostMapping("/add")
   public ResponseEntity<User> createUser(@RequestBody User user) {
