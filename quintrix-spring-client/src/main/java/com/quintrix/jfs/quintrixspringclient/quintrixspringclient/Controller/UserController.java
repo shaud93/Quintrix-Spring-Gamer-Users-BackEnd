@@ -28,6 +28,9 @@ public class UserController {
   @Autowired
   UserService userservice;
 
+  // Rest template calls
+
+  // restTemplate get all games
   @GetMapping("/allgames")
   public ResponseEntity<String> getAllVideoGames() {
 
@@ -36,6 +39,7 @@ public class UserController {
     return response;
   }
 
+  // restTemplate get games by id
   @GetMapping("/game/{id}")
   public VideoGame getAllVideoGames(@PathVariable("id") String id) {
 
@@ -44,6 +48,31 @@ public class UserController {
     return response;
   }
 
+  // restTemplate Create a video game
+  @PostMapping("/game/add")
+  public VideoGame createGame(@RequestBody VideoGame game) {
+    VideoGame response = videogameservice.createGame(game);
+
+    return response;
+  }
+
+  // restTemplate Update VideoGame
+  @PutMapping("game/{id}/update")
+  public VideoGame updateVideoGame(@RequestBody VideoGame game, @PathVariable("id") String id) {
+    VideoGame response = videogameservice.updateGame(game, id);
+    return response;
+  }
+
+  // restTemplate Delete VideoGame
+  @DeleteMapping("game/{id}/delete")
+  public void DeleteGame(@PathVariable("id") String id) {
+    videogameservice.deleteGame(id);
+  }
+
+
+  // User Url
+
+  // Create a user
   @PostMapping("/add")
   public ResponseEntity<User> createUser(@RequestBody User user) {
     return new ResponseEntity<User>(userservice.createUser(user), HttpStatus.CREATED);

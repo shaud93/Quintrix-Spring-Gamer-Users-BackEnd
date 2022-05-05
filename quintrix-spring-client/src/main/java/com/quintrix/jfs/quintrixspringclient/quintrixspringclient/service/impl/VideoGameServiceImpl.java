@@ -43,7 +43,7 @@ public class VideoGameServiceImpl implements VideoGameService {
     return call;
   }
 
-  // Consume api with params
+  // Consuming an api with params
   @Override
   public VideoGame getGameById(String id) {
     Map<String, String> urlParams = new HashMap<>();
@@ -52,5 +52,43 @@ public class VideoGameServiceImpl implements VideoGameService {
         restTemplate.getForObject(GET_VIDEOGAME_BY_ID_API, VideoGame.class, urlParams);
     return response;
   }
+
+  // posting using resttemplate
+  @Override
+  public VideoGame createGame(VideoGame videogame) {
+    VideoGame response =
+        restTemplate.postForObject(CREATE_VIDEOGAME_API, videogame, VideoGame.class);
+    return response;
+  }
+
+  // updating using Resttemplate ...should be void
+  @Override
+  public VideoGame updateGame(VideoGame videogame, String id) {
+    VideoGame response = getGameById(id);
+
+    response.setMultiPlayer(videogame.getMultiPlayer());
+    response.setPc(videogame.getPc());
+    response.setPlayStation(videogame.getPlayStation());
+    response.setRelease_year(videogame.getRelease_year());
+    response.setXbox(videogame.getXbox());
+    response.setStudio(videogame.getStudio());
+    response.setTitle(videogame.getTitle());
+
+    Map<String, String> param = new HashMap<>();
+    param.put("id", id);
+
+    restTemplate.put(UPDATE_VIDEOGAME_API, response, param);
+    return response;
+  }
+
+  //// deleting using Resttemplate
+  @Override
+  public void deleteGame(String id) {
+    Map<String, String> param = new HashMap<>();
+    param.put("id", id);
+    restTemplate.delete(DELETE_VIDEOGAME_API, param);
+  }
+
+
 
 }
